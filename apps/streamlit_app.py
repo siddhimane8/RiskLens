@@ -32,6 +32,10 @@ def load_artifacts():
     best_threshold = joblib.load(THRESHOLD_PATH)
 
     shap_explainer = joblib.load(SHAP_EXPLAINER_PATH)
+
+    if not hasattr(shap_explainer, "approximate"):
+        shap_explainer.approximate = False
+
     shap_feature_names = joblib.load(SHAP_FEATURE_NAMES_PATH)
     global_shap_importance = pd.read_csv(GLOBAL_SHAP_PATH)
 
@@ -43,17 +47,14 @@ def load_artifacts():
         shap_feature_names,
         global_shap_importance,
     )
-
-
 (
-    model,
-    preprocessor,
-    best_threshold,
-    shap_explainer,
-    shap_feature_names,
-    global_shap_importance,
-) = load_artifacts()
-
+     model,
+     preprocessor,
+     best_threshold,
+     shap_explainer,
+     shap_feature_names,
+     global_shap_importance,
+ ) = load_artifacts()
 
 # -----------------------------
 # Decision logic
